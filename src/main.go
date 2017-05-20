@@ -1,12 +1,10 @@
 package main
 
-// github.com/djviolin/lanti-mvc-gtpl/src/main.go
-
 import (
 	"log"
 	"net/http"
 
-	"github.com/djviolin/lanti-mvc-gtpl/src/controllers"
+	"github.com/djviolin/lanti-mvc/src/controllers"
 )
 
 func main() {

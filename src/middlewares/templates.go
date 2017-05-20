@@ -3,7 +3,7 @@ package middlewares
 /*
 USAGE:
 	import (
-		mw "github.com/djviolin/lanti-mvc-gtpl/src/middlewares"
+		mw "github.com/djviolin/lanti-mvc/src/middlewares"
 	)
 
 	mw.ParseDirectory("./views", "index")

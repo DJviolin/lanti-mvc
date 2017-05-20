@@ -1,12 +1,10 @@
 package controllers
 
-// github.com/djviolin/lanti-mvc-gtpl/src/controllers/index.go
-
 import (
 	"log"
 	"net/http"
 
-	mw "github.com/djviolin/lanti-mvc-gtpl/src/middlewares"
+	mw "github.com/djviolin/lanti-mvc/src/middlewares"
 )
 
 // Student : constructor for template
