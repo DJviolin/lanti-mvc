@@ -1,0 +1,46 @@
+package middlewares
+
+/*
+USAGE:
+	import (
+		mw "github.com/djviolin/lanti-mvc-gtpl/src/middlewares"
+	)
+
+	mw.template("content.html")
+*/
+
+import (
+	"fmt"
+	"html/template"
+	"io/ioutil"
+	"strings"
+)
+
+var templates *template.Template
+
+// Template : template parser middleware
+func Template(file string) {
+	var allFiles []string
+	files, err := ioutil.ReadDir("./views")
+	if err != nil {
+		fmt.Println(err)
+	}
+	for _, file := range files {
+		filename := file.Name()
+		if strings.HasSuffix(filename, ".html") {
+			allFiles = append(allFiles, "./views/"+filename)
+		}
+	}
+
+	// parses all .html files in the 'views' folder
+	templates, err = template.ParseFiles(allFiles...)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	/*gtpl := templates.Lookup(file)
+	gtpl.ExecuteTemplate(os.Stdout, "content", nil)
+	fmt.Println()*/
+
+	templates.Lookup(file)
+}
