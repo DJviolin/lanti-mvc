@@ -16,7 +16,7 @@ import (
 
 // Index : is the index handler
 func Index(w http.ResponseWriter, r *http.Request) {
-	render, err := mw.ParseDirectory("./views", "main")
+	render, err := mw.ParseDirectory("./views", "content")
 	if err != nil {
 		log.Fatal("Parse: ", err)
 		return

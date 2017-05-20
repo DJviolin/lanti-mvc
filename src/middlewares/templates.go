@@ -12,7 +12,6 @@ USAGE:
 */
 
 import (
-	"fmt"
 	"html/template"
 	"os"
 	"path/filepath"
@@ -43,7 +42,7 @@ func ParseDirectory(dirpath string, file string) (*template.Template, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(paths) // logging
+	//fmt.Println(paths) // logging
 	t := template.New(file)
 	return t.ParseFiles(paths...)
 }
