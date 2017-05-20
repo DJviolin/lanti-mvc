@@ -16,10 +16,10 @@ import (
 
 // Index : is the index handler
 func Index(w http.ResponseWriter, r *http.Request) {
-	render, err := mw.ParseDirectory("./views", "content")
+	render, err := mw.ParseDirectory("./views", "index")
 	if err != nil {
 		log.Fatal("Parse: ", err)
 		return
 	}
-	render.Execute(w, map[string]string{"Title": "My title", "Body": "This is the body"})
+	render.Execute(w, map[string]string{"Title": "My title", "Body": "This is the body", "tmp": "index"})
 }
