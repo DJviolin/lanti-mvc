@@ -12,9 +12,11 @@ USAGE:
 */
 
 import (
+	"fmt"
 	"html/template"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // GetAllFilePathsInDirectory : recursively get all file paths in dir + sub-dirs
@@ -24,7 +26,7 @@ func GetAllFilePathsInDirectory(dirpath string) ([]string, error) {
 		if err != nil {
 			return err
 		}
-		if !info.IsDir() {
+		if strings.HasSuffix(path, ".html") && !info.IsDir() {
 			paths = append(paths, path)
 		}
 		return nil
@@ -41,7 +43,7 @@ func ParseDirectory(dirpath string, file string) (*template.Template, error) {
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(paths) // logging
+	fmt.Println(paths) // logging
 	t := template.New(file)
 	return t.ParseFiles(paths...)
 }
