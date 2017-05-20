@@ -1,5 +1,7 @@
 package middlewares
 
+// https://github.com/siongui/userpages/blob/master/content/articles/2017/02/13/go-template-parse-all-files-in-directory%25en.rst
+
 /*
 USAGE:
 	import (
@@ -15,8 +17,7 @@ import (
 	"path/filepath"
 )
 
-// GetAllFilePathsInDirectory : Recursively get all file paths in directory, including sub-directories.
-// https://github.com/siongui/userpages/blob/master/content/articles/2017/02/13/go-template-parse-all-files-in-directory%25en.rst
+// GetAllFilePathsInDirectory : recursively get all file paths in dir + sub-dirs
 func GetAllFilePathsInDirectory(dirpath string) ([]string, error) {
 	var paths []string
 	err := filepath.Walk(dirpath, func(path string, info os.FileInfo, err error) error {
@@ -34,15 +35,13 @@ func GetAllFilePathsInDirectory(dirpath string) ([]string, error) {
 	return paths, nil
 }
 
-// ParseDirectory : Recursively parse all files in directory, including sub-directories.
-// https://github.com/siongui/userpages/blob/master/content/articles/2017/02/13/go-template-parse-all-files-in-directory%25en.rst
-//func ParseDirectory(dirpath string) (*template.Template, error) {
-func ParseDirectory(dirpath string, filename string) (*template.Template, error) {
+// ParseDirectory : recursively parse all files in dir + sub-dirs
+func ParseDirectory(dirpath string, file string) (*template.Template, error) {
 	paths, err := GetAllFilePathsInDirectory(dirpath)
 	if err != nil {
 		return nil, err
 	}
-	//fmt.Println(paths)          // logging
-	t := template.New(filename)
+	//fmt.Println(paths) // logging
+	t := template.New(file)
 	return t.ParseFiles(paths...)
 }
