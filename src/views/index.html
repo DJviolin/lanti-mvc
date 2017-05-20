@@ -1,4 +1,5 @@
-{{define "content"}}
+{{template "header" .}}
+{{define "index"}}
 <h1>Nested here</h1>
 <ul>
     <li>Nested usage</li>
@@ -6,3 +7,4 @@
 </ul>
 <p>main content: {{ . }}</p>
 {{end}}
+{{template "footer" .}}
