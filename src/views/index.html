@@ -1,10 +1,10 @@
-{{template "header" .}}
 {{define "index"}}
+{{template "header" .}}
 <h1>Nested here</h1>
 <ul>
     <li>Nested usage</li>
     <li>Call template</li>
 </ul>
 <p>main content: {{ . }}</p>
-{{end}}
 {{template "footer" .}}
+{{end}}
