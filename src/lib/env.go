@@ -13,7 +13,7 @@ var (
 )
 
 // User : return current user's name
-var User = os.Getenv("PGUSER")
+var User = os.Getenv("USER")
 
 // Port : returns the port from env or string
 func Port() int {
