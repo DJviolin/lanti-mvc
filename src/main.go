@@ -13,7 +13,7 @@ func main() {
 	// http://stackoverflow.com/a/26563418/1442219
 	//http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("/public"))))
 
-	// Init Gorilla/Mux router
+	// Init Gorilla/mux router
 	r := mux.NewRouter()
 
 	// Routes
