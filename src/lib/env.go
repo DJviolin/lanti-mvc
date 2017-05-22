@@ -23,5 +23,6 @@ func Port() int {
 		log.Print("Unable to get env PORT, falling back to :8080")
 		port = 8080
 	}
+	log.Printf("Listening on port %d...", port)
 	return port
 }
