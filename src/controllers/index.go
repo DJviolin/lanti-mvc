@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	lib "github.com/djviolin/lanti-mvc/src/lib"
 	mw "github.com/djviolin/lanti-mvc/src/middlewares"
 )
 
@@ -25,5 +26,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		"Title": "My title",
 		"Body":  "This is the body",
 		"tmp":   "index",
+		"user":  lib.User,
 	})
 }
