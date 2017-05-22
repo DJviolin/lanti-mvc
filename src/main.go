@@ -1,14 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/djviolin/lanti-mvc/src/controllers"
+	lib "github.com/djviolin/lanti-mvc/src/lib"
 	"github.com/gorilla/mux"
 )
 
 func main() {
+	// Variables to identify the build
+	fmt.Println("Version: ", lib.Version)
+	fmt.Println("Git commit hash: ", lib.Build)
+
 	// Static files
 	// http://stackoverflow.com/a/26563418/1442219
 	//http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("/public"))))
