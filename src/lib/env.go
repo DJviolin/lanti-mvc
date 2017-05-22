@@ -15,7 +15,7 @@ var (
 // User : return current user's name
 var User = os.Getenv("USER")
 
-// Port : returns the port from env or string
+// Port : returns the port as an int from env or returns 8080
 func Port() int {
 	// Atoi converts string to int, which returns an error as the second value
 	port, err := strconv.Atoi(os.Getenv("PORT"))
