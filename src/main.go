@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/djviolin/lanti-mvc/src/controllers"
 	lib "github.com/djviolin/lanti-mvc/src/lib"
@@ -12,8 +12,8 @@ import (
 
 func main() {
 	// Variables to identify the build
-	fmt.Println("Version: ", lib.Version)
-	fmt.Println("Git commit hash: ", lib.Build)
+	log.Print("Version: ", lib.Version)
+	log.Print("Git commit hash: ", lib.Build)
 
 	// Static files
 	// http://stackoverflow.com/a/26563418/1442219
@@ -34,7 +34,10 @@ func main() {
 	http.Handle("/", r)
 
 	// Server
-	err := http.ListenAndServe(":8080", nil)
+	port := ":" + strconv.Itoa(lib.Port())
+	p := &port
+	log.Printf("Listening on port %s ...", *p)
+	err := http.ListenAndServe(*p, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
