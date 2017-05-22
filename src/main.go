@@ -18,7 +18,8 @@ func main() {
 
 	// Routes
 	//http.HandleFunc("/", controllers.Index)
-	r.HandleFunc("/", controllers.Index) // Root page
+	r.HandleFunc("/", controllers.Index)
+	r.HandleFunc("/hello/{param}", controllers.Hello)
 
 	// Static files
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))

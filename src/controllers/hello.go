@@ -5,17 +5,14 @@ import (
 	"net/http"
 
 	mw "github.com/djviolin/lanti-mvc/src/middlewares"
+	"github.com/gorilla/mux"
 )
 
-// Student : constructor for template
-/*type Student struct {
-	//exported field since it begins
-	//with a capital letter
-	Name string
-}*/
+// Hello : is the "/hello" route handler
+func Hello(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	w.WriteHeader(http.StatusOK)
 
-// Index : is the index handler
-func Index(w http.ResponseWriter, r *http.Request) {
 	render, err := mw.ParseDirectory("./views", "index")
 	if err != nil {
 		log.Fatal("Parse: ", err)
@@ -25,5 +22,6 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		"Title": "My title",
 		"Body":  "This is the body",
 		"tmp":   "index",
+		"param": vars["param"],
 	})
 }
