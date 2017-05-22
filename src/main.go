@@ -34,7 +34,7 @@ func main() {
 	http.Handle("/", r)
 
 	// Server
-	port := ":" + strconv.Itoa(lib.Port())
+	port := ":" + strconv.Itoa(lib.Port()) // int to string
 	p := &port
 	log.Printf("Listening on port %s ...", *p)
 	err := http.ListenAndServe(*p, nil)
