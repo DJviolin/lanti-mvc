@@ -1,5 +1,12 @@
 package main
 
+/*
+Gorilla/mux:
+https://github.com/gorilla/mux#examples
+https://medium.com/dev-bits/understanding-the-gorilla-mux-a-sturdy-url-router-from-the-golang-7494660f4907
+http://howistart.org/posts/go/1/
+*/
+
 import (
 	"log"
 	"net/http"
