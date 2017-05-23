@@ -4,7 +4,9 @@ package middlewares
 // https://www.nicolasmerouze.com/middlewares-golang-best-practices-examples/
 // http://www.alexedwards.net/blog/making-and-using-middleware
 // Solution: https://gowebexamples.github.io/advanced-middleware/
-// Status code: http://ndersson.me/post/capturing_status_code_in_net_http/
+// Status code:
+// http://ndersson.me/post/capturing_status_code_in_net_http/
+// https://gist.github.com/Boerworz/b683e46ae0761056a636
 
 import (
 	"log"
