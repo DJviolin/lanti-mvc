@@ -55,15 +55,17 @@ func Logging(l *log.Logger) Middleware {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()
+			lrw := NewLoggingResponseWriter(w)
 			defer func() {
 				log.Printf("--> %s %s | %s", r.Method, r.URL.Path, time.Since(start))
 				//log.Printf("<-- %d %s", http.StatusOK, http.StatusText(http.StatusOK))
-				lrw := NewLoggingResponseWriter(w)
-				h.ServeHTTP(lrw, r)
+				//lrw := NewLoggingResponseWriter(w)
+				//h.ServeHTTP(lrw, r)
 				statusCode := lrw.statusCode
 				log.Printf("<-- %d %s", statusCode, http.StatusText(statusCode))
 			}()
 			//h.ServeHTTP(w, r)
+			h.ServeHTTP(lrw, r)
 		})
 	}
 }
