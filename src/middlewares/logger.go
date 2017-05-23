@@ -55,9 +55,9 @@ func Method(m string) Middleware {
 
 // Chain : takes the handler you want to adapt, and a list of our Adapter types
 // h with all specified adapters.
-func Chain(h http.HandlerFunc, adapters ...Middleware) http.HandlerFunc {
-	for _, adapter := range adapters {
-		h = adapter(h)
+func Chain(h http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
+	for _, middleware := range middlewares {
+		h = middleware(h)
 	}
 	return h
 }
