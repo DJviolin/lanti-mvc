@@ -19,6 +19,23 @@ import (
 //type Middleware func(http.HandlerFunc) http.HandlerFunc
 type Middleware func(http.Handler) http.Handler
 
+type loggingResponseWriter struct {
+	http.ResponseWriter
+	statusCode int
+}
+
+func (lrw *loggingResponseWriter) WriteHeader(code int) {
+	lrw.statusCode = code
+	lrw.ResponseWriter.WriteHeader(code)
+}
+
+// NewLoggingResponseWriter :
+func NewLoggingResponseWriter(w http.ResponseWriter) *loggingResponseWriter {
+	// WriteHeader(int) is not called if our response implicitly returns 200 OK, so
+	// we default to that status code.
+	return &loggingResponseWriter{w, http.StatusOK}
+}
+
 // Logging : adapter wraps an http.Handler with additional functionality
 // It's allowing the original http.Handler `h`
 // to do whatever it was already going to do in between
@@ -40,9 +57,13 @@ func Logging(l *log.Logger) Middleware {
 			start := time.Now()
 			defer func() {
 				log.Printf("--> %s %s | %s", r.Method, r.URL.Path, time.Since(start))
-				log.Printf("<-- %d %s", http.StatusOK, http.StatusText(http.StatusOK))
+				//log.Printf("<-- %d %s", http.StatusOK, http.StatusText(http.StatusOK))
+				lrw := NewLoggingResponseWriter(w)
+				h.ServeHTTP(lrw, r)
+				statusCode := lrw.statusCode
+				log.Printf("<-- %d %s", statusCode, http.StatusText(statusCode))
 			}()
-			h.ServeHTTP(w, r)
+			//h.ServeHTTP(w, r)
 		})
 	}
 }
