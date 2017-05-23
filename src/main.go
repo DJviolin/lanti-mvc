@@ -30,13 +30,16 @@ func main() {
 	r := mux.NewRouter()
 	// Routes
 	//r.HandleFunc("/", mw.Chain(controllers.Index, mw.Method("GET"), mw.Logging(logger)))
-	r.HandleFunc("/", controllers.Index)
-	r.HandleFunc("/hello/{param}", controllers.Hello)
+	//r.HandleFunc("/", controllers.Index)
+	r.HandleFunc("/", mw.ChainFunc(controllers.Index, mw.MethodFunc("GET")))
+	//r.HandleFunc("/hello/{param}", controllers.Hello)
+	r.HandleFunc("/hello/{param}", mw.ChainFunc(controllers.Hello, mw.MethodFunc("GET")))
 	// Static files
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
 	// This comes after the routes
 	//http.Handle("/", r)
-	http.Handle("/", mw.Chain(r, mw.Method("GET"), mw.Logging(logger)))
+	//http.Handle("/", mw.Chain(r, mw.Logging(logger)))
+	http.Handle("/", mw.Chain(r, mw.Logging(logger)))
 
 	// Server
 	port := ":" + strconv.Itoa(lib.Port()) // int to string
