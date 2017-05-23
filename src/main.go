@@ -31,9 +31,9 @@ func main() {
 	// Routes
 	//r.HandleFunc("/", mw.Chain(controllers.Index, mw.Method("GET"), mw.Logging(logger)))
 	//r.HandleFunc("/", controllers.Index)
-	r.HandlerFunc("/", mw.ChainFunc(controllers.Index, mw.MethodFunc("GET")))
+	r.HandleFunc("/", mw.ChainFunc(controllers.Index, mw.MethodFunc("GET")))
 	//r.HandleFunc("/hello/{param}", controllers.Hello)
-	r.HandlerFunc("/hello/{param}", mw.ChainFunc(controllers.Hello, mw.MethodFunc("GET")))
+	r.HandleFunc("/hello/{param}", mw.ChainFunc(controllers.Hello, mw.MethodFunc("GET")))
 	// Static files
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
 	// This comes after the routes
