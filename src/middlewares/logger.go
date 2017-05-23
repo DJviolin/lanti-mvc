@@ -20,7 +20,9 @@ type Adapter func(http.HandlerFunc) http.HandlerFunc
 func Logging(l *log.Logger) Adapter {
 	return func(h http.HandlerFunc) http.HandlerFunc {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			log.Println("Req before")
 			log.Printf("%s %s", r.Method, r.URL.Path)
+			defer log.Println("Req after")
 			h.ServeHTTP(w, r)
 		})
 	}
