@@ -1,6 +1,7 @@
 package middlewares
 
 // https://medium.com/@matryer/writing-middleware-in-golang-and-how-go-makes-it-so-much-fun-4375c1246e81
+// https://gowebexamples.github.io/advanced-middleware/
 // https://www.nicolasmerouze.com/middlewares-golang-best-practices-examples/
 // http://www.alexedwards.net/blog/making-and-using-middleware
 // Solution: https://gowebexamples.github.io/advanced-middleware/
