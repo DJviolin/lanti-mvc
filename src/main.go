@@ -29,7 +29,6 @@ func main() {
 	// Init Gorilla/mux router
 	r := mux.NewRouter()
 	// Routes
-	//r.HandleFunc("/", mw.Chain(controllers.Index, mw.Method("GET"), mw.Logging(logger)))
 	//r.HandleFunc("/", controllers.Index)
 	r.HandleFunc("/", mw.ChainFunc(controllers.Index, mw.MethodFunc("GET")))
 	//r.HandleFunc("/hello/{param}", controllers.Hello)
@@ -38,7 +37,6 @@ func main() {
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
 	// This comes after the routes
 	//http.Handle("/", r)
-	//http.Handle("/", mw.Chain(r, mw.Logging(logger)))
 	http.Handle("/", mw.Chain(r, mw.Logging(logger)))
 
 	// Server
