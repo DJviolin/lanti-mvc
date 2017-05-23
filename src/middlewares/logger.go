@@ -4,6 +4,7 @@ package middlewares
 // https://www.nicolasmerouze.com/middlewares-golang-best-practices-examples/
 // http://www.alexedwards.net/blog/making-and-using-middleware
 // Solution: https://gowebexamples.github.io/advanced-middleware/
+// Status code: http://ndersson.me/post/capturing_status_code_in_net_http/
 
 import (
 	"log"
@@ -22,8 +23,8 @@ func Logging(l *log.Logger) Middleware {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()
 			defer func() {
-				log.Println(w)
 				log.Printf("--> %s %s | %s", r.Method, r.URL.Path, time.Since(start))
+				log.Printf("<-- %d %s", http.StatusOK, http.StatusText(http.StatusOK))
 			}()
 			h.ServeHTTP(w, r)
 		})
