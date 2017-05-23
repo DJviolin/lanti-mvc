@@ -35,9 +35,6 @@ func main() {
 	r := mux.NewRouter()
 	// Routes
 	//r.HandleFunc("/", controllers.Index)
-
-	//http.Handle("/", mw.Notify(logger)(controllers.Index)) // route with logger middleware
-	//http.Handle("/", mw.Adapt(controllers.Index, mw.Logging(logger)))
 	r.HandleFunc("/", mw.Adapt(controllers.Index, mw.Logging(logger)))
 
 	r.HandleFunc("/hello/{param}", controllers.Hello)
