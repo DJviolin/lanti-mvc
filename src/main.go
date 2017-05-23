@@ -36,7 +36,7 @@ func main() {
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
 	// This comes after the routes
 	//http.Handle("/", r)
-	http.Handle("/", mw.Chain(r, mw.Logging(logger)))
+	http.Handle("/", mw.Chain(r, mw.Method("GET"), mw.Logging(logger)))
 
 	// Server
 	port := ":" + strconv.Itoa(lib.Port()) // int to string

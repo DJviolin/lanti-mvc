@@ -94,17 +94,17 @@ func Logging(l *log.Logger) Middleware {
 // curl -I -X POST 127.0.0.1:8080
 func Method(m string) Middleware {
 	// Create a new Middleware
-	return func(h http.HandlerFunc) http.HandlerFunc {
+	return func(h http.Handler) http.Handler {
 		// Define the http.HandlerFunc
-		return func(w http.ResponseWriter, r *http.Request) {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// Do middleware things
 			if r.Method != m {
 				http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 				return
 			}
 			// Call the next middleware/handler in chain
-			h(w, r)
-		}
+			h.ServeHTTP(w, r)
+		})
 	}
 }
 
