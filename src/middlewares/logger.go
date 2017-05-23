@@ -11,7 +11,6 @@ import (
 )
 
 // Adapter : is a function that both takes in and returns an http.Handler
-//type Adapter func(http.Handler) http.Handler
 type Adapter func(http.HandlerFunc) http.HandlerFunc
 
 // Logging : adapter wraps an http.Handler with additional functionality
