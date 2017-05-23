@@ -36,7 +36,6 @@ func main() {
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
 	// This comes after the routes
 	//http.Handle("/", r)
-	//http.Handle("/", r)
 	http.Handle("/", mw.Chain(r, mw.Logging(logger)))
 
 	// Server
