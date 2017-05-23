@@ -20,15 +20,10 @@ type Middleware func(http.HandlerFunc) http.HandlerFunc
 func Logging(l *log.Logger) Middleware {
 	return func(h http.HandlerFunc) http.HandlerFunc {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			//log.Println("Req before")
-			//log.Printf("%s %s", r.Method, r.URL.Path)
-			//defer log.Println("Req after")
-
 			start := time.Now()
 			defer func() {
 				log.Printf("%s %s | %s", r.Method, r.URL.Path, time.Since(start))
 			}()
-
 			h.ServeHTTP(w, r)
 		})
 	}
