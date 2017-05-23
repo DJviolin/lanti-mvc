@@ -43,7 +43,8 @@ strings written to.
 func Logging(l *log.Logger) Adapter {
 	return func(h http.HandlerFunc) http.HandlerFunc {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			l.Println(r.Method, r.URL.Path)
+			//l.Println(r.Method, r.URL.Path)
+			log.Printf("%s %s", r.Method, r.URL.Path)
 			h.ServeHTTP(w, r)
 		})
 	}
