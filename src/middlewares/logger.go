@@ -8,28 +8,35 @@ package middlewares
 import (
 	"log"
 	"net/http"
+	"time"
 )
 
-// Adapter : is a function that both takes in and returns an http.Handler
-type Adapter func(http.HandlerFunc) http.HandlerFunc
+// Middleware : is a function that both takes in and returns an http.Handler
+type Middleware func(http.HandlerFunc) http.HandlerFunc
 
 // Logging : adapter wraps an http.Handler with additional functionality
 // It's allowing the original http.Handler `h`
 // to do whatever it was already going to do in between
-func Logging(l *log.Logger) Adapter {
+func Logging(l *log.Logger) Middleware {
 	return func(h http.HandlerFunc) http.HandlerFunc {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			log.Println("Req before")
-			log.Printf("%s %s", r.Method, r.URL.Path)
-			defer log.Println("Req after")
+			//log.Println("Req before")
+			//log.Printf("%s %s", r.Method, r.URL.Path)
+			//defer log.Println("Req after")
+
+			start := time.Now()
+			defer func() {
+				log.Printf("%s %s | %s", r.Method, r.URL.Path, time.Since(start))
+			}()
+
 			h.ServeHTTP(w, r)
 		})
 	}
 }
 
-// Adapt : takes the handler you want to adapt, and a list of our Adapter types
+// Chain : takes the handler you want to adapt, and a list of our Adapter types
 // h with all specified adapters.
-func Adapt(h http.HandlerFunc, adapters ...Adapter) http.HandlerFunc {
+func Chain(h http.HandlerFunc, adapters ...Middleware) http.HandlerFunc {
 	for _, adapter := range adapters {
 		h = adapter(h)
 	}
