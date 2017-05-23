@@ -17,6 +17,11 @@ import (
 
 // Index : is the index handler
 func Index(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		http.NotFound(w, r)
+		return
+	}
+
 	render, err := mw.ParseDirectory("./views", "index")
 	if err != nil {
 		log.Fatal("Parse: ", err)

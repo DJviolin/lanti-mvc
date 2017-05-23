@@ -26,17 +26,10 @@ func main() {
 
 	// Init logger
 	logger := log.New(os.Stdout, "server: ", log.Lshortfile)
-
-	// Static files
-	// http://stackoverflow.com/a/26563418/1442219
-	//http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("/public"))))
-
 	// Init Gorilla/mux router
 	r := mux.NewRouter()
 	// Routes
-	//r.HandleFunc("/", controllers.Index)
 	r.HandleFunc("/", mw.Chain(controllers.Index, mw.Logging(logger)))
-
 	r.HandleFunc("/hello/{param}", controllers.Hello)
 	// Static files
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
