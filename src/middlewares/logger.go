@@ -22,7 +22,8 @@ func Logging(l *log.Logger) Middleware {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()
 			defer func() {
-				log.Printf("%s %s | %s", r.Method, r.URL.Path, time.Since(start))
+				log.Println(w)
+				log.Printf("--> %s %s | %s", r.Method, r.URL.Path, time.Since(start))
 			}()
 			h.ServeHTTP(w, r)
 		})
