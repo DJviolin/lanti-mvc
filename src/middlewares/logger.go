@@ -89,6 +89,25 @@ func Logging(l *log.Logger) Middleware {
 	}
 }*/
 
+// Method : ensures that url can only be requested with a specific method,
+// else returns a 400 Bad Request
+// curl -I -X POST 127.0.0.1:8080
+func Method(m string) Middleware {
+	// Create a new Middleware
+	return func(h http.HandlerFunc) http.HandlerFunc {
+		// Define the http.HandlerFunc
+		return func(w http.ResponseWriter, r *http.Request) {
+			// Do middleware things
+			if r.Method != m {
+				http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+				return
+			}
+			// Call the next middleware/handler in chain
+			h(w, r)
+		}
+	}
+}
+
 // Chain : takes the handler you want to adapt, and a list of our Adapter types
 // h with all specified adapters.
 /*func Chain(h http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
