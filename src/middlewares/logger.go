@@ -38,7 +38,7 @@ func Logging(l *log.Logger) Middleware {
 // else returns a 400 Bad Request
 func Method(m string) Middleware {
 	// Create a new Middleware
-	return func(f http.HandlerFunc) http.HandlerFunc {
+	return func(h http.HandlerFunc) http.HandlerFunc {
 		// Define the http.HandlerFunc
 		return func(w http.ResponseWriter, r *http.Request) {
 			// Do middleware things
@@ -47,7 +47,7 @@ func Method(m string) Middleware {
 				return
 			}
 			// Call the next middleware/handler in chain
-			f(w, r)
+			h(w, r)
 		}
 	}
 }
