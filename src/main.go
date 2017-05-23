@@ -10,10 +10,12 @@ http://howistart.org/posts/go/1/
 import (
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/djviolin/lanti-mvc/src/controllers"
 	lib "github.com/djviolin/lanti-mvc/src/lib"
+	mw "github.com/djviolin/lanti-mvc/src/middlewares"
 	"github.com/gorilla/mux"
 )
 
@@ -22,6 +24,9 @@ func main() {
 	log.Print("Version: ", lib.Version)
 	log.Print("Git commit hash: ", lib.Build)
 
+	// Init logger
+	logger := log.New(os.Stdout, "server: ", log.Lshortfile)
+
 	// Static files
 	// http://stackoverflow.com/a/26563418/1442219
 	//http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("/public"))))
@@ -29,7 +34,8 @@ func main() {
 	// Init Gorilla/mux router
 	r := mux.NewRouter()
 	// Routes
-	r.HandleFunc("/", controllers.Index)
+	//r.HandleFunc("/", controllers.Index)
+	http.Handle("/", mw.Notify(logger)(controllers.Index)) // route with logger middleware
 	r.HandleFunc("/hello/{param}", controllers.Hello)
 	// Static files
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
