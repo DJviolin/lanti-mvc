@@ -15,7 +15,12 @@ type Adapter func(http.Handler) http.Handler
 // Notify : adapt an http.Handler to write out the “before” and “after” strings,
 // allowing the original http.Handler `h`
 // to do whatever it was already going to do in between
-func Notify(logger *log.Logger) Adapter {
+/*
+The following example is going to allow us to specify the log.Logger
+(from the standard package) that we want our “before” and “after”
+strings written to.
+*/
+/*func Notify(logger *log.Logger) Adapter {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			logger.Println("before")
@@ -23,4 +28,30 @@ func Notify(logger *log.Logger) Adapter {
 			h.ServeHTTP(w, r)
 		})
 	}
+}*/
+
+// Logging : adapter wraps an http.Handler with additional functionality
+func Logging(l *log.Logger) Adapter {
+	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			l.Println(r.Method, r.URL.Path)
+			h.ServeHTTP(w, r)
+		})
+	}
+}
+
+/*// Adapt : takes the handler you want to adapt, and a list of our Adapter types
+func Adapt(h http.Handler, adapters ...Adapter) http.Handler {
+	for _, adapter := range adapters {
+		h = adapter(h)
+	}
+	return h
+}*/
+
+// Adapt : h with all specified adapters.
+func Adapt(h http.Handler, adapters ...Adapter) http.Handler {
+	for _, adapter := range adapters {
+		h = adapter(h)
+	}
+	return h
 }

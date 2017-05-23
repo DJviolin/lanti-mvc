@@ -35,7 +35,11 @@ func main() {
 	r := mux.NewRouter()
 	// Routes
 	//r.HandleFunc("/", controllers.Index)
-	http.Handle("/", mw.Notify(logger)(controllers.Index)) // route with logger middleware
+
+	//http.Handle("/", mw.Notify(logger)(controllers.Index)) // route with logger middleware
+	//http.Handle("/", mw.Adapt(controllers.Index, mw.Logging(logger)))
+	r.Handle("/", mw.Adapt(controllers.Index, mw.Logging(logger)))
+
 	r.HandleFunc("/hello/{param}", controllers.Hello)
 	// Static files
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./public/"))))
