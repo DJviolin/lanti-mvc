@@ -16,11 +16,9 @@ import (
 )
 
 // Middleware : is a function that both takes in and returns an http.Handler
-//type Middleware func(http.HandlerFunc) http.HandlerFunc
-//type Middleware func(http.Handler) http.Handler
 type Middleware func(http.Handler) http.Handler
 
-// MiddlewareFunc :
+// MiddlewareFunc : is a function that both takes in and returns an http.HandlerFunc
 type MiddlewareFunc func(http.HandlerFunc) http.HandlerFunc
 
 type loggingResponseWriter struct {
@@ -62,43 +60,9 @@ func Logging(l *log.Logger) Middleware {
 	}
 }
 
-// LoggingFunc :
-func LoggingFunc(l *log.Logger) MiddlewareFunc {
-	return func(h http.HandlerFunc) http.HandlerFunc {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			start := time.Now()
-			lrw := NewLoggingResponseWriter(w)
-			defer func() {
-				log.Printf("--> %s %s | %s", r.Method, r.URL.Path, time.Since(start))
-				//log.Printf("<-- %d %s", http.StatusOK, http.StatusText(http.StatusOK))
-				//lrw := NewLoggingResponseWriter(w)
-				//h.ServeHTTP(lrw, r)
-				statusCode := lrw.statusCode
-				log.Printf("<-- %d %s", statusCode, http.StatusText(statusCode))
-			}()
-			//h.ServeHTTP(w, r)
-			h.ServeHTTP(lrw, r)
-		})
-	}
-}
-
-// Method : ensures that url can only be requested with a specific method,
+// MethodFunc : ensures that url can only be requested with a specific method,
 // else returns a 400 Bad Request
 // curl -I -X POST 127.0.0.1:8080
-func Method(m string) Middleware {
-	return func(h http.Handler) http.Handler { // Create a new Middleware
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { // Define the http.HandlerFunc
-			// Do middleware things
-			if r.Method != m {
-				http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
-				return
-			}
-			h.ServeHTTP(w, r) // Call the next middleware/handler in chain
-		})
-	}
-}
-
-// MethodFunc :
 func MethodFunc(m string) MiddlewareFunc {
 	return func(h http.HandlerFunc) http.HandlerFunc { // Create a new Middleware
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { // Define the http.HandlerFunc
