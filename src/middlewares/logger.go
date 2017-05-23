@@ -49,6 +49,7 @@ func Logging(l *log.Logger) Middleware {
 			defer func() {
 				log.Printf("--> %s %s | %s", r.Method, r.URL.Path, time.Since(start))
 				//log.Printf("<-- %d %s", http.StatusOK, http.StatusText(http.StatusOK))
+				//
 				//lrw := NewLoggingResponseWriter(w)
 				//h.ServeHTTP(lrw, r)
 				statusCode := lrw.statusCode
