@@ -10,7 +10,8 @@ import (
 )
 
 // Adapter : is a function that both takes in and returns an http.Handler
-type Adapter func(http.Handler) http.Handler
+//type Adapter func(http.Handler) http.Handler
+type Adapter func(http.HandlerFunc) http.HandlerFunc
 
 // Notify : adapt an http.Handler to write out the “before” and “after” strings,
 // allowing the original http.Handler `h`
@@ -31,8 +32,16 @@ strings written to.
 }*/
 
 // Logging : adapter wraps an http.Handler with additional functionality
-func Logging(l *log.Logger) Adapter {
+/*func Logging(l *log.Logger) Adapter {
 	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			l.Println(r.Method, r.URL.Path)
+			h.ServeHTTP(w, r)
+		})
+	}
+}*/
+func Logging(l *log.Logger) Adapter {
+	return func(h http.HandlerFunc) http.HandlerFunc {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			l.Println(r.Method, r.URL.Path)
 			h.ServeHTTP(w, r)
@@ -49,7 +58,13 @@ func Adapt(h http.Handler, adapters ...Adapter) http.Handler {
 }*/
 
 // Adapt : h with all specified adapters.
-func Adapt(h http.Handler, adapters ...Adapter) http.Handler {
+/*func Adapt(h http.Handler, adapters ...Adapter) http.Handler {
+	for _, adapter := range adapters {
+		h = adapter(h)
+	}
+	return h
+}*/
+func Adapt(h http.HandlerFunc, adapters ...Adapter) http.HandlerFunc {
 	for _, adapter := range adapters {
 		h = adapter(h)
 	}
