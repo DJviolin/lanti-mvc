@@ -36,6 +36,7 @@ func Logging(l *log.Logger) Middleware {
 
 // Method : ensures that url can only be requested with a specific method,
 // else returns a 400 Bad Request
+// curl -I -X POST 127.0.0.1:8080
 func Method(m string) Middleware {
 	// Create a new Middleware
 	return func(h http.HandlerFunc) http.HandlerFunc {
