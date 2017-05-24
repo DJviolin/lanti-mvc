@@ -7,6 +7,11 @@ https://medium.com/dev-bits/understanding-the-gorilla-mux-a-sturdy-url-router-fr
 http://howistart.org/posts/go/1/
 */
 
+/*
+Security:
+https://dev.to/joncalhoun/what-is-sql-injection-and-how-do-i-avoid-it-in-go
+*/
+
 import (
 	"log"
 	"net/http"
