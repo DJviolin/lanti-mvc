@@ -11,7 +11,6 @@ import (
 
 func task() {
 	fmt.Println("I am runnning task:", time.Now())
-	//
 	// Platform specific code
 	cmd := exec.Command("bash", "migrate.sh")
 	err := cmd.Run()
