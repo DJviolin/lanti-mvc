@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os/exec"
 	"time"
 
 	"github.com/robfig/cron"
@@ -9,6 +11,13 @@ import (
 
 func task() {
 	fmt.Println("I am runnning task:", time.Now())
+	//
+	// Platform specific code
+	cmd := exec.Command("echo", "hello", ">", "out.txt")
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func main() {
