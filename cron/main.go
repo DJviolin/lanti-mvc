@@ -13,7 +13,7 @@ func task() {
 	fmt.Println("I am runnning task:", time.Now())
 	//
 	// Platform specific code
-	cmd := exec.Command("echo", "hello", ">", "out.txt")
+	cmd := exec.Command("bash", "migrate.sh")
 	err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
